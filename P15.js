@@ -1,21 +1,26 @@
 var threeSum = function (nums) {
   if (nums.length < 3) return [];
   let result = [];
-  let sets = [];
+  nums.sort((a, b) => a - b);
+  let target = 0;
   for (let i = 0; i < nums.length - 2; i++) {
-    targetFirst = 0 - nums[i];
-    for (let j = i + 1; j < nums.length - 1; j++) {
-      targetSecond = targetFirst - nums[j];
-      for (let k = j + 1; k < nums.length; k++) {
-        if (nums[k] === targetSecond) {
-          let tmp = [nums[i], nums[j], nums[k]];
+    if (nums[i] > target) break;
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
 
-          result.push(tmp);
-        }
-      }
+    let j = i + 1;
+    let k = nums.length - 1;
+    while (j < k) {
+      let sum = nums[i] + nums[j] + nums[k];
+      if (sum === target) {
+        result.push([nums[i], nums[j], nums[k]]);
+        while (nums[j] === nums[j + 1]) j++;
+        while (nums[k] === nums[k - 1]) k--;
+        j++;
+        k--;
+      } else if (sum < target) j++;
+      else k--;
     }
   }
-
   return result;
 };
 
