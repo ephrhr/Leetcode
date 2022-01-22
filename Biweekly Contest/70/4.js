@@ -1,0 +1,1 @@
+var numberOfWays = function (corridor) {};
